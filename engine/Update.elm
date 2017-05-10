@@ -220,7 +220,7 @@ step terrain keyLimit inputs label camera focPos player0 = if inputs.reset then 
                 if player.cameraInside then
                     -- let behind = player.pos `sub` (V3.scale 2.5 (Model.direction player.motion)) `sub` (vec3 0 0.5 0)
                     let inside = add player.motion.position
-                                     (Orientation.rotateBodyV player.motion.orientation (vec3 0 0 1)) -- wedge
+                                     (Orientation.rotateBodyV player.motion.orientation (vec3 0 0 3.0)) -- wedge
                                      -- Inside Jeep driver's seat
                                      -- `add` Qn.vrotate player.orientQn (vec3 0.38 0.5 -2.3)
                     in

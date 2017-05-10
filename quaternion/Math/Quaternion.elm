@@ -261,6 +261,7 @@ toMat4 q =
         |> M4.rotate tau V3.i
         |> M4.rotate psi V3.j
 -}
-        M4.makeRotate psi (V3.negate V3.j)
+        -- M4.makeRotate psi (V3.negate V3.j)
+        M4.makeRotate psi V3.j
         |> M4.rotate tau V3.i
         |> M4.rotate phi V3.k

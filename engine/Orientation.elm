@@ -19,8 +19,10 @@ followedBy : Orientation -> Orientation -> Orientation
 followedBy = Qn.hamilton
 
 rotateBodyV : Orientation -> Vec3 -> Vec3
-rotateBodyV = Qn.vrotate
+-- rotateBodyV = Qn.vrotate
+rotateBodyV o = Qn.vrotate (Qn.negate o) 
 
 rotateLabV : Orientation -> Vec3 -> Vec3
-rotateLabV o = Qn.vrotate (Qn.negate o) 
+-- rotateLabV o = Qn.vrotate (Qn.negate o) 
+rotateLabV = Qn.vrotate
 
