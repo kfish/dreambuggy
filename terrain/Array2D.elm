@@ -37,6 +37,16 @@ setXY x y val (Array2D s arr) =
     Array2D s (Array.set (x + y * s) val arr)
 
 
+mapXY : Int -> Int -> (a -> a) -> Array2D a -> Array2D a
+mapXY x y f input =
+    let
+        (Array2D s arr) = input
+    in
+        Array.get (x + y * s) arr
+        |> Maybe.map (\val -> setXY x y (f val) input)
+        |> Maybe.withDefault input
+
+
 map : (a -> b) -> Array2D a -> Array2D b
 map f (Array2D s arr) =
     Array2D s (Array.map f arr)

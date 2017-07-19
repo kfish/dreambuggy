@@ -16,9 +16,22 @@ randTerrain2D side =
     let
         s2 =
             side - 1 - (side % 8)
+
+        above0 x y arr =
+            mapXY x y (clamp 0.0 1.0) arr
+
+        above0_X x arr0 =
+            List.foldl (\y arr -> above0 x y arr) arr0 (List.range 1 (s2-1))
+
+        above0_Y y arr0 =
+            List.foldl (\x arr -> above0 x y arr) arr0 (List.range 1 (s2-1))
     in
         Random.map
             (terrain2D side
+                << above0_X 0
+                << above0_X s2
+                << above0_Y 0
+                << above0_Y s2
                 << setXY 0 0 1.0
                 << setXY 0 s2 0.8
                 << setXY s2 0 1.0
