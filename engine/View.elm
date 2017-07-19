@@ -376,7 +376,7 @@ renderWorld globalTime world eye windowSize player =
             lookAtElev windowSize player
 
         appears =
-            List.concat <| List.map (bodyAppear elevLookAt skyLookAt p) world.bodies
+            List.concat <| List.map (bodyAppear elevLookAt skyLookAt p) (world.bodies player.camera.position)
     in
         appears
 

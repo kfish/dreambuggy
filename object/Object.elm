@@ -233,9 +233,9 @@ animate ground dt model =
         setMotion newMotion model
 
 
-bodies : Model vehicle -> List Body
-bodies model_ =
-    case model_.body of
+bodies : Model vehicle -> Vec3 -> List Body
+bodies model pos =
+    case model.body of
         Just body ->
             [ toBody body ]
 

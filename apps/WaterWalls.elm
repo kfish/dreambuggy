@@ -33,6 +33,7 @@ type alias Model =
     { walls : Body
     , floor : Body
     , hardWalls : Body
+    , seaLevel : Float
     }
 
 
@@ -146,6 +147,7 @@ init placement =
         ( { walls = walls
           , floor = floor
           , hardWalls = hardWalls
+          , seaLevel = seaLevel
           }
         , Cmd.none
         )
@@ -161,10 +163,13 @@ animate ground dt model =
     model
 
 
-bodies : Model -> List Body
-bodies model =
-    [ model.walls, model.floor, model.hardWalls ]
-    -- [ model.hardWalls ]
+bodies : Model -> Vec3 -> List Body
+bodies model pos =
+    if V3.getY pos <= model.seaLevel then
+        [ model.walls, model.floor, model.hardWalls ]
+        -- [ model.hardWalls ]
+    else
+       []
 
 
 overlay : Model -> Html msg

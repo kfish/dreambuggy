@@ -73,9 +73,9 @@ animate ground dt boids =
     moveBoids Boids.default ground dt boids
 
 
-bodies : Boids -> List Body
-bodies =
-    List.map toBody
+bodies : Boids -> Vec3 -> List Body
+bodies boids pos =
+    List.map toBody boids
 
 
 reposition : Maybe AppPosition -> Boids -> Boids

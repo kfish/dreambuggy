@@ -45,7 +45,7 @@ main =
 
                 , deltaWedge
 
-                , buggy
+                -- , buggy
                 , aston_martin
 
 {-

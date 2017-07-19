@@ -6,7 +6,7 @@ import Appearance exposing (Appearance)
 import Body exposing (..)
 import Dispatch exposing (..)
 import Html exposing (Html)
-import Math.Vector3 exposing (Vec3, vec3)
+import Math.Vector3 as V3 exposing (Vec3, vec3)
 import Task exposing (Task)
 
 
@@ -53,9 +53,12 @@ animate ground dt body =
     body
 
 
-bodies : Model -> List Body
-bodies body =
-    [ body ]
+bodies : Model -> Vec3 -> List Body
+bodies body pos =
+    if V3.getY pos > 0 then
+        [ body ]
+    else
+        []
 
 
 overlay : Model -> Html msg

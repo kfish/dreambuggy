@@ -23,7 +23,7 @@ type alias Animated model msg =
     { id : model -> String
     , label : model -> String
     , update : msg -> model -> ( model, Cmd msg )
-    , bodies : model -> List Body
+    , bodies : model -> (Vec3 -> List Body)
     , animate : Ground -> Time -> model -> model
     , framing : PartyKey -> model -> Maybe Framing
     , focus : model -> Maybe Focus
@@ -107,7 +107,7 @@ packAnimate f ground dt dyn =
     Dynamic.pack (f ground dt (Dynamic.unpack dyn))
 
 
-packBodies : (a -> List Body) -> AppModel -> List Body
+packBodies : (a -> (Vec3 -> List Body)) -> AppModel -> (Vec3 -> List Body)
 packBodies f dyn =
     f (Dynamic.unpack dyn)
 
@@ -251,7 +251,7 @@ animate ground dt { methods, model } =
         { methods = methods, model = newModel }
 
 
-bodies : App -> List Body
+bodies : App -> (Vec3 -> List Body)
 bodies { methods, model } =
     methods.bodies model
 

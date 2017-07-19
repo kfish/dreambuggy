@@ -52,7 +52,7 @@ type GlobalMsg
 
 type alias World =
     { backgroundColor : Color
-    , bodies : List Body
+    , bodies : Vec3 -> List Body
     , ground : Ground
     }
 

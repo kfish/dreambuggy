@@ -81,9 +81,9 @@ animate ground dt balls =
     collisions dt (gravity ground dt balls)
 
 
-bodies : Balls -> List Body
-bodies =
-    List.map toBody
+bodies : Balls -> Vec3 -> List Body
+bodies balls _ =
+    List.map toBody balls
 
 
 reposition : Maybe AppPosition -> Balls -> Balls

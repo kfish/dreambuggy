@@ -191,14 +191,14 @@ makeWorld ground world =
         partyBodies party =
             case party.rideKey of
                 Just _ ->
-                    []
+                    always []
 
                 Nothing ->
                     bodies party.self
 
-        worldBodies =
-            List.concatMap bodies (Bag.items world.apps)
-                ++ List.concatMap partyBodies (Bag.items world.parties)
+        worldBodies pos =
+            List.concatMap (\app -> (bodies app) pos) (Bag.items world.apps)
+                ++ List.concatMap (\app -> (partyBodies app) pos) (Bag.items world.parties)
     in
         { backgroundColor = world.backgroundColor
         , bodies = worldBodies

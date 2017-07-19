@@ -5,7 +5,7 @@ import App.Control exposing (..)
 import Body exposing (Body)
 import Dispatch exposing (..)
 import Html exposing (Html)
-import Math.Vector3 exposing (vec3)
+import Math.Vector3 exposing (Vec3, vec3)
 import Task exposing (Task)
 
 
@@ -64,9 +64,9 @@ animate ground dt model =
     model
 
 
-bodies : Model -> List Body
-bodies =
-    identity
+bodies : Model -> Vec3 -> List Body
+bodies model pos =
+    model
 
 
 overlay : Model -> Html msg

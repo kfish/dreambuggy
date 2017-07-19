@@ -105,8 +105,8 @@ animate ground dt model =
     model
 
 
-bodies : Model -> List Body
-bodies model =
+bodies : Model -> Vec3 -> List Body
+bodies model pos =
     [ model.walls, model.floor, model.ceiling ]
 
 

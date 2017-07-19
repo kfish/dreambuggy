@@ -542,9 +542,12 @@ animate ground dt model =
         setPosition (setElevation model.attributes.position) (collide dt newModel)
 
 
-bodies : Model -> List Body
-bodies model =
-    model.table :: List.map toBody [ model.puck, model.paddle1, model.paddle2 ]
+bodies : Model -> Vec3 -> List Body
+bodies model pos =
+    if (V3.distanceSquared model.attributes.position pos < 900) then
+        model.table :: List.map toBody [ model.puck, model.paddle1, model.paddle2 ]
+    else
+        [ model.table ]
 
 
 framing : PartyKey -> Model -> Maybe Framing
