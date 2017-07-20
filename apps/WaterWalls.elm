@@ -62,7 +62,7 @@ init placement =
         seaLevel =
             -- see terrain/Body/Terrain.elm, 1.0 is the height passed to NoiseSurfaceVertex
             -- 0.085 * placement.yMult
-            0.1 * placement.yMult
+            0.125 * placement.yMult
 
         x0 =
             placement.xOffset
@@ -105,7 +105,7 @@ init placement =
 
         followPlayer appear =
             { anchor = AnchorElevation 0
-            , scale = vec3 120 (height-0.015) 120
+            , scale = vec3 120 height 120
             , position = floorCenterPosition
             , orientation = Orientation.initial
             , appear = appear
