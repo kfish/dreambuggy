@@ -9,23 +9,11 @@
     "exposed-modules": [],
     "native-modules": true,
     "dependencies": {
-        "Zinggi/elm-obj-loader": "1.0.2 <= v < 2.0.0",
         "elm-community/linear-algebra": "3.1.1 <= v < 4.0.0",
-        "elm-community/list-extra": "6.1.0 <= v < 7.0.0",
-        "elm-community/maybe-extra": "4.0.0 <= v < 5.0.0",
-        "elm-community/random-extra": "2.0.0 <= v < 3.0.0",
-        "elm-community/webgl": "2.0.3 <= v < 3.0.0",
-        "elm-lang/animation-frame": "1.0.1 <= v < 2.0.0",
         "elm-lang/core": "5.1.1 <= v < 6.0.0",
         "elm-lang/html": "2.0.0 <= v < 3.0.0",
         "elm-lang/mouse": "1.0.1 <= v < 2.0.0",
-        "elm-lang/window": "1.0.1 <= v < 2.0.0",
-        "jystic/elm-font-awesome": "2.0.0 <= v < 3.0.0",
-        "kfish/dynamic": "2.1.0 <= v < 3.0.0",
-        "kfish/elm-gamepad": "3.4.0 <= v < 4.0.0",
-        "kfish/glsl-pasta": "4.1.0 <= v < 5.0.0",
-        "kfish/quaternion": "2.0.0 <= v < 3.0.0",
-        "ohanhi/keyboard-extra": "3.0.4 <= v < 4.0.0"
+        "here4/here4": "3.0.0 <= v < 4.0.0"
     },
     "elm-version": "0.18.0 <= v < 0.19.0"
 }
