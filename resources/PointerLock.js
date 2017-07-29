@@ -15,9 +15,10 @@ document.exitPointerLock = document.exitPointerLock    ||
                            document.webkitExitPointerLock;
 
 function initArgs(args) {
-    args = args || {};
-    args.movement = [0,0];
-    args.isLocked = false;
+    //args = args || {};
+    //args.movement = [0,0];
+    //args.isLocked = false;
+    args = null;
     return args;
 }
 
