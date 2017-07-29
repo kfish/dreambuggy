@@ -5,13 +5,7 @@
     "license": "BSD3",
     "source-directories": [
         "dreambuggy",
-        "engine",
-        "primitive",
-        "terrain",
-        "apps",
-        "object",
-        "vehicles",
-        "shufflepuck"
+        "src"
     ],
     "exposed-modules": [],
     "native-modules": true,
