@@ -4,13 +4,7 @@
     "repository": "https://github.com/kfish/dreambuggy.git",
     "license": "BSD3",
     "source-directories": [
-        "dreambuggy",
-        "engine",
-        "primitive",
-        "terrain",
-        "apps",
-        "object",
-        "shufflepuck"
+        "dreambuggy"
     ],
     "exposed-modules": [],
     "native-modules": true,
