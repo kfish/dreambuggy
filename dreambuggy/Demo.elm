@@ -1,4 +1,4 @@
-module Mau5 exposing (create, Flags, Model, Msg)
+module Demo exposing (create, Flags, Model, Msg)
 
 import Here4.App exposing (..)
 import Here4.Control exposing (..)

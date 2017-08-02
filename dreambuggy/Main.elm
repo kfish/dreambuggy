@@ -17,7 +17,7 @@ import Math.Vector3 as V3 exposing (vec3)
 import Boids
 import BoxRoom
 import Balls
-import Mau5
+import Demo
 import Shufflepuck
 import Sky
 import StaticGround
@@ -26,9 +26,9 @@ import Body.Terrain as Terrain
 import Body.Wedge exposing (wedge)
 
 
-main : Navigator Mau5.Flags Mau5.Model Mau5.Msg
+main : Navigator Demo.Flags Demo.Model Demo.Msg
 main =
-    Mau5.create
+    Demo.create
         [ { id = "world1"
           , label = "Dreambuggy"
           , backgroundColor = rgb 135 206 235
