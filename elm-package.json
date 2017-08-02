@@ -4,7 +4,7 @@
     "repository": "https://github.com/kfish/dreambuggy.git",
     "license": "BSD3",
     "source-directories": [
-        "dreambuggy"
+        "src"
     ],
     "exposed-modules": [],
     "native-modules": true,

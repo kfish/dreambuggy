@@ -4,7 +4,7 @@ PROJECT=dreambuggy
 
 REMOTE=${GHUSER}-${PROJECT}
 
-SOURCE=dreambuggy/Main.elm
+SOURCE=src/Main.elm
 SCRIPT=dreambuggy.js
 TARGET=build/${SCRIPT}
 DEPLOY=scripts/${SCRIPT}
