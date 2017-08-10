@@ -23,24 +23,24 @@ type alias MouseMovement =
     ( Int, Int )
 
 
-type Mau5Msg
+type DemoMsg
     = MouseMove MouseMovement
     | LockRequest Bool
     | LockUpdate Bool
 
 
 type alias Msg =
-    WorldMsg (NavMsg Mau5Msg)
+    WorldMsg (NavMsg DemoMsg)
 
 
-type alias Mau5Model =
+type alias DemoModel =
     { wantToBeLocked : Bool
     , isLocked : Bool
     }
 
 
 type alias Model =
-    Multiverse Mau5Model
+    Multiverse DemoModel
 
 
 create :
@@ -50,14 +50,14 @@ create attributes =
     World.create init update subscriptions attributes
 
 
-init : Flags -> ( Mau5Model, Cmd (NavMsg Mau5Msg) )
+init : Flags -> ( DemoModel, Cmd (NavMsg DemoMsg) )
 init flags =
     ( { wantToBeLocked = True
       , isLocked = flags.isLocked
       }
     , Cmd.none )
 
-update : NavMsg Mau5Msg -> Mau5Model -> ( Mau5Model, Cmd (NavMsg Mau5Msg) )
+update : NavMsg DemoMsg -> DemoModel -> ( DemoModel, Cmd (NavMsg DemoMsg) )
 update msg model =
     case msg of
         Self (MouseMove movement) ->
@@ -88,7 +88,7 @@ update msg model =
             ( model, Cmd.none )
 
 
-subscriptions : Multiverse Mau5Model -> Sub (NavMsg Mau5Msg)
+subscriptions : Multiverse DemoModel -> Sub (NavMsg DemoMsg)
 subscriptions model =
     [ Ports.isLocked (\x -> Self (LockUpdate x))
     ]
