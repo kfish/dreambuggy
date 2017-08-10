@@ -16,7 +16,7 @@ type alias Flags =
     , isLocked : Bool
     }
 
-{-| This type is returned by the fullscreen JS api in Mau5.js
+{-| This type is returned by the fullscreen JS api in PointerLock.js
 for mouse movement
 -}
 type alias MouseMovement =
