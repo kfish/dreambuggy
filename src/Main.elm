@@ -97,10 +97,9 @@ main =
           , label = "Shufflepuck Club"
           , backgroundColor = rgb 255 255 255
           , apps =
-                [ let
-                      room = BoxRoom.default
-                  in
-                      BoxRoom.create { room | dimensions = vec3 20 50 30 }
+                [ BoxRoom.create
+                      [ dimensions <| vec3 20 50 30
+                      ]
                 , let
                     s =
                         Shufflepuck.default
