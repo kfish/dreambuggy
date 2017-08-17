@@ -2,7 +2,8 @@
 
 Drive dreambuggy on mountains, snow and sand. Fly dreambird.
 
-[![Dreambuggy demo video](http://img.youtube.com/vi/RDFuTzPQ3Sc/0.jpg)](http://www.youtube.com/watch?v=RDFuTzPQ3Sc "Dreambuggy demo")
+[![Dreambuggy demo video](http://img.youtube.com/vi/RDFuTzPQ3Sc/0.jpg)](http://www.youtube.com/watch?v=RDFuTzPQ3Sc "Play on YouTube")
+[![Dreambird demo video](http://img.youtube.com/vi/kW4eseUG9b4/0.jpg)](http://www.youtube.com/watch?v=kW4eseUG9b4 "Play on YouTube")
 
 ## Controls
 
