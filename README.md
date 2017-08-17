@@ -20,6 +20,8 @@ Press the spacebar or gamepad button X to enter/exit vehicles and portals.
 
 ## Play in your browser
 
+ * [Live demo (kfish.github.io/dreambuggy)][demo]
+
 [![PLAY](resources/beach1.png)][demo]
 [![PLAY](resources/snow1.png)][demo]
 
