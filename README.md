@@ -2,10 +2,21 @@
 
 Drive dreambuggy on mountains, snow and sand. Fly dreambird.
 
-Plug in a gamepad, or use mouse and keyboard arrows or WASD keys to move.
-Press X to switch between driving and flying.
 
+## Controls
+
+Plug in a gamepad, or use mouse and keyboard arrows or WASD keys to move.
 Supports up to 2 USB gamepads.
+
+Press the spacebar or gamepad button X to enter/exit vehicles and portals.
+
+|    | :computer: Keyboard | :video_game: Gamepad |
+|---|---|---|
+| Enter/exit vehicles and portals | Space | X |
+| Show app info / movement controls | i | Guide (eg. Xbox Logo) |
+| Change camera | c, C | Right, left bumpers |
+| Move camera | h,j,k,l | DPad left,down,up,right |
+
 
 ## Play in your browser
 
@@ -16,8 +27,8 @@ Supports up to 2 USB gamepads.
 
 ## Build Locally
 
-This package depends on kfish/elm-gamepad and kfish/dynamic,
-which contain experimental Native code. They are not yet
+This package depends on here4/here4,
+which uses experimental Native code and is not yet
 whiteliested for inclusion in the Elm package archive.
 You will need to use an unofficial installer like
 [elm-install](https://github.com/gdotdesign/elm-github-install)
