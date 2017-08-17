@@ -2,6 +2,10 @@
 
 Drive dreambuggy on mountains, snow and sand. Fly dreambird.
 
+Dreambuggy is the original demo for [Here4 (github.com)](https://www.github.com/here4/here4), a 3D app framework.
+Here4 lets you create worlds connected by portals, and code up apps for things like
+vehicles, portals, interactive objects and games.
+
 ## Play in your browser
 
  * [Live demo (kfish.github.io/dreambuggy)][demo]
@@ -10,7 +14,7 @@ Drive dreambuggy on mountains, snow and sand. Fly dreambird.
 
 ## Demo videos
 
-_Subscribe to [my YouTube channel](https://www.youtube.com/channel/UCyjxiIzul2SBjRTEGi9CZ3A "Conrad Parker's YouTube channel") for more_
+_Subscribe to [my YouTube channel](https://www.youtube.com/channel/UCyjxiIzul2SBjRTEGi9CZ3A "Conrad Parker's YouTube channel") for more!_
 
 [![Dreambuggy demo video](http://img.youtube.com/vi/RDFuTzPQ3Sc/0.jpg)](http://www.youtube.com/watch?v=RDFuTzPQ3Sc "Play on YouTube")
 [![Dreambird demo video](http://img.youtube.com/vi/kW4eseUG9b4/0.jpg)](http://www.youtube.com/watch?v=kW4eseUG9b4 "Play on YouTube")
