@@ -2,6 +2,16 @@
 
 Drive dreambuggy on mountains, snow and sand. Fly dreambird.
 
+## Play in your browser
+
+ * [Live demo (kfish.github.io/dreambuggy)][demo]
+
+[demo]: http://kfish.github.io/dreambuggy/
+
+## Demo videos
+
+_Subscribe to [my YouTube channel](https://www.youtube.com/channel/UCyjxiIzul2SBjRTEGi9CZ3A "Conrad Parker's YouTube channel") for more_
+
 [![Dreambuggy demo video](http://img.youtube.com/vi/RDFuTzPQ3Sc/0.jpg)](http://www.youtube.com/watch?v=RDFuTzPQ3Sc "Play on YouTube")
 [![Dreambird demo video](http://img.youtube.com/vi/kW4eseUG9b4/0.jpg)](http://www.youtube.com/watch?v=kW4eseUG9b4 "Play on YouTube")
 
@@ -18,16 +28,6 @@ Press the spacebar or gamepad button X to enter/exit vehicles and portals.
 | Show app info / movement controls | i | Guide (eg. Xbox Logo) |
 | Change camera | c, C | Right, left bumpers |
 | Move camera | h,j,k,l | DPad left,down,up,right |
-
-
-## Play in your browser
-
- * [Live demo (kfish.github.io/dreambuggy)][demo]
-
-[![PLAY](resources/beach1.png)][demo]
-[![PLAY](resources/snow1.png)][demo]
-
-[demo]: http://kfish.github.io/dreambuggy/
 
 ## Build Locally
 
