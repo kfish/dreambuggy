@@ -98,7 +98,7 @@ main =
           , backgroundColor = rgb 255 255 255
           , apps =
                 [ BoxRoom.create
-                      [ dimensions <| vec3 20 50 30
+                      [ BoxRoom.dimensions <| vec3 20 50 30
                       ]
                 , let
                     s =
