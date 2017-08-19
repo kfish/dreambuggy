@@ -24,11 +24,11 @@ _Subscribe to [my YouTube channel](https://www.youtube.com/channel/UCyjxiIzul2SB
 Plug in a gamepad, or use mouse and keyboard arrows or WASD keys to move.
 Supports up to 2 USB gamepads.
 
-Press the spacebar or gamepad button X to enter/exit vehicles and portals.
+Press the spacebar or gamepad button Y to enter/exit vehicles and portals.
 
 |    | :computer: Keyboard | :video_game: Gamepad |
 |---|---|---|
-| Enter/exit vehicles and portals | Space | X |
+| Enter/exit vehicles and portals | Space | Y |
 | Show app info / movement controls | i | Guide (eg. Xbox Logo) |
 | Change camera | c, C | Right, left bumpers |
 | Move camera | h,j,k,l | DPad left,down,up,right |
