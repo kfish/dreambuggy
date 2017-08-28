@@ -13,7 +13,7 @@ import Here4.Primitive.Sphere exposing (skySphere, cloudsSphere)
 import Here4.Vehicle.DreamBird as DreamBird
 import Here4.Vehicle.DreamBuggy as DreamBuggy
 import Here4.Vehicle.Walking as Walking
-import Math.Vector3 as V3 exposing (vec3)
+import Math.Vector3 as V3 exposing (Vec3, vec3)
 import Boids
 import BoxRoom
 import Balls
@@ -41,7 +41,8 @@ main =
                 -- , Balls.create 30
                 , textureCube
                 , deltaWedge
-                , buggy
+                , buggy <| vec3 27 0 43
+                , buggy <| vec3 37 0 43
 
                 {-
                    , Object.create
@@ -193,8 +194,8 @@ textureCube =
             ]
 
 
-buggy : ( App, Cmd AppMsg )
-buggy =
+buggy : Vec3 -> ( App, Cmd AppMsg )
+buggy pos =
     let
         html =
             Html.div []
@@ -208,7 +209,7 @@ buggy =
         Object.create
             [ id "buggy"
             , label "Buggy"
-            , position <| vec3 37 0 43
+            , position pos
             , overlay <| html
             , object <|
                 Object.texturedObjWith
