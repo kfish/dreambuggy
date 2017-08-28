@@ -40,7 +40,8 @@ main =
 
                 -- , Balls.create 30
                 , textureCube
-                , deltaWedge
+                , deltaWedge <| vec3 23 0 12
+                , deltaWedge <| vec3 33 0 12
                 , buggy <| vec3 27 0 43
                 , buggy <| vec3 37 0 43
 
@@ -129,8 +130,8 @@ main =
         ]
 
 
-deltaWedge : ( App, Cmd AppMsg )
-deltaWedge =
+deltaWedge : Vec3 -> ( App, Cmd AppMsg )
+deltaWedge pos =
     let
         html =
             Html.div []
@@ -145,7 +146,7 @@ deltaWedge =
         Object.create
             [ id "wedge"
             , label "Delta Wedge"
-            , position <| vec3 23 0 12
+            , position pos
             , scale <| Scale 7.0
             , overlay <| html
             , object <| Appearance wedge (vec3 1 1 1)
