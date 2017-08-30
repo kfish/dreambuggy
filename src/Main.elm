@@ -185,7 +185,7 @@ textureCube =
                     , texturePath = "resources/woodCrate.jpg"
                     }
             , vehicle <|
-                { drive = DreamBuggy.drive
+                { drive = DreamBuggy.hovercraft
                 , vehicle =
                     { speed = 8.0
                     , height = 1.0
