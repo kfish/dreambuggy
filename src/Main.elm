@@ -189,7 +189,7 @@ textureCube =
                 , vehicle =
                     { speed = 8.0
                     , height = 1.0
-                    , radius = 0.5
+                    , radius = 0.0
                     }
                 }
             ]
