@@ -50,7 +50,10 @@ main =
                     , buggy <| vec3 37 0 43
                     ]
 
-                , addApps ( List.repeat 100 (addRandom randomCube) )
+                , addApps ( List.repeat 1000 (addRandom (random textureCube)) )
+
+                -- , addApps ( List.repeat 100 (addRandom (random buggy)) )
+                , addApps ( List.repeat 100 (addRandom (random deltaWedge)) )
 
                 {-
                    , Object.create
@@ -168,7 +171,7 @@ deltaWedge pos =
             ]
 
 
-randomCube = Random.map textureCube (randomPosition defaultPlacement)
+random thing = Random.map thing (randomPosition defaultPlacement)
 
 textureCube : Vec3 -> ( App, Cmd AppMsg )
 textureCube pos =
