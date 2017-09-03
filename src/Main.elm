@@ -14,6 +14,7 @@ import Here4.Vehicle.DreamBird as DreamBird
 import Here4.Vehicle.DreamBuggy as DreamBuggy
 import Here4.Vehicle.Walking as Walking
 import Math.Vector3 as V3 exposing (Vec3, vec3)
+import AddApps exposing (addApps, addRandom)
 import Boids
 import BoxRoom
 import Balls
@@ -24,6 +25,8 @@ import StaticGround
 import WaterWalls
 import Body.Terrain as Terrain
 import Body.Wedge exposing (wedge)
+import Position exposing (randomPosition)
+import Random
 
 
 main : Navigator Demo.Flags Demo.Model Demo.Msg
@@ -39,11 +42,15 @@ main =
                 , elmLogo
 
                 -- , Balls.create 30
-                , textureCube
-                , deltaWedge <| vec3 23 0 12
-                , deltaWedge <| vec3 33 0 12
-                , buggy <| vec3 27 0 43
-                , buggy <| vec3 37 0 43
+
+                , addApps
+                    [ deltaWedge <| vec3 23 0 12
+                    , deltaWedge <| vec3 33 0 12
+                    , buggy <| vec3 27 0 43
+                    , buggy <| vec3 37 0 43
+                    ]
+
+                , addApps ( List.repeat 100 (addRandom randomCube) )
 
                 {-
                    , Object.create
@@ -161,8 +168,10 @@ deltaWedge pos =
             ]
 
 
-textureCube : ( App, Cmd AppMsg )
-textureCube =
+randomCube = Random.map textureCube (randomPosition defaultPlacement)
+
+textureCube : Vec3 -> ( App, Cmd AppMsg )
+textureCube pos =
     let
         html =
             Html.div []
@@ -177,7 +186,7 @@ textureCube =
         Object.create
             [ id "crate"
             , label "Wooden crate"
-            , position <| vec3 -2 0 17
+            , position pos
             , overlay html
             , object <|
                 FlatTexture
