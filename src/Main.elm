@@ -1,6 +1,7 @@
 module Main exposing (main)
 
 import Html exposing (Html)
+import Here4.Ground exposing (aboveSeaLevel)
 import Here4.Location exposing (..)
 import Here4.Navigator exposing (..)
 import Here4.Object as Object
@@ -14,7 +15,7 @@ import Here4.Vehicle.DreamBird as DreamBird
 import Here4.Vehicle.DreamBuggy as DreamBuggy
 import Here4.Vehicle.Walking as Walking
 import Math.Vector3 as V3 exposing (Vec3, vec3)
-import AddApps exposing (addApps, addRandom)
+import AddApps exposing (..)
 import Boids
 import BoxRoom
 import Balls
@@ -50,10 +51,11 @@ main =
                     , buggy <| vec3 37 0 43
                     ]
 
-                , addApps ( List.repeat 1000 (addRandom (random textureCube)) )
+                -- , addApps ( List.repeat 1000 (addRandom (random textureCube)) )
+                , addApps ( List.repeat 1000 (addAnywhere textureCube) )
 
                 -- , addApps ( List.repeat 100 (addRandom (random buggy)) )
-                , addApps ( List.repeat 100 (addRandom (random deltaWedge)) )
+                , addApps ( List.repeat 100 (addSomewhere aboveSeaLevel deltaWedge) )
 
                 {-
                    , Object.create
