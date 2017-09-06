@@ -1,7 +1,7 @@
 module Main exposing (main)
 
 import Html exposing (Html)
-import Here4.Ground exposing (aboveSeaLevel)
+import Here4.Ground exposing (..)
 import Here4.Location exposing (..)
 import Here4.Navigator exposing (..)
 import Here4.Object as Object
@@ -52,7 +52,7 @@ main =
                     ]
 
                 -- , addApps ( List.repeat 1000 (addRandom (random textureCube)) )
-                , addApps ( List.repeat 1000 (addAnywhere textureCube) )
+                , addApps ( List.repeat 100 (addSomewhere (on Beach) textureCube) )
 
                 -- , addApps ( List.repeat 100 (addRandom (random buggy)) )
                 , addApps ( List.repeat 100 (addSomewhere aboveSeaLevel deltaWedge) )
