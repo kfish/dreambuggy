@@ -52,7 +52,9 @@ main =
                     ]
 
                 -- , addApps ( List.repeat 1000 (addRandom (random textureCube)) )
-                , addApps ( List.repeat 100 (addSomewhere (on Beach) textureCube) )
+                , addApps ( List.repeat 100 (addSomewhere (on ShallowWater) textureCube) )
+
+                , addApps ( List.repeat 100 (addSomewhere (on Beach) hovercraft) )
 
                 -- , addApps ( List.repeat 100 (addRandom (random buggy)) )
                 , addApps ( List.repeat 100 (addSomewhere aboveSeaLevel deltaWedge) )
@@ -159,6 +161,7 @@ deltaWedge pos =
             [ id "wedge"
             , label "Delta Wedge"
             , position pos
+            , canFloat True
             , scale <| Scale 7.0
             , overlay <| html
             , object <| Appearance wedge (vec3 1 1 1)
@@ -192,6 +195,7 @@ textureCube pos =
             [ id "crate"
             , label "Wooden crate"
             , position pos
+            , canFloat True
             , overlay html
             , object <|
                 FlatTexture
@@ -199,7 +203,7 @@ textureCube pos =
                     , texturePath = "resources/woodCrate.jpg"
                     }
             , vehicle <|
-                { drive = DreamBuggy.hovercraft
+                { drive = DreamBuggy.boat
                 , vehicle =
                     { speed = 8.0
                     , height = 1.0
@@ -224,6 +228,7 @@ buggy pos =
         Object.create
             [ id "buggy"
             , label "Buggy"
+            , canFloat False
             , position pos
             , overlay <| html
             , object <|
@@ -246,6 +251,43 @@ buggy pos =
             ]
 
 
+hovercraft : Vec3 -> ( App, Cmd AppMsg )
+hovercraft pos =
+    let
+        html =
+            Html.div []
+                [ Html.h2 []
+                    [ Html.text "Hovercraft" ]
+                , Html.br [] []
+                , Html.hr [] []
+                , DreamBuggy.overlay
+                ]
+    in
+        Object.create
+            [ id "hovercraft"
+            , label "Hovercraft"
+            , canFloat True
+            , position pos
+            , overlay <| html
+            , object <|
+                Object.texturedObjWith
+                    "meshes/hovercraft1.obj"
+                    "textures/elmLogoDiffuse.png"
+                    "textures/elmLogoNorm.png"
+                    [ offset <| FloorCenter
+                    , scale <| Width 1.8
+                    , forward <| V3.i
+                    ]
+            , vehicle <|
+                { drive = DreamBuggy.hovercraft
+                , vehicle =
+                    { speed = 10.0
+                    , height = 0.6
+                    , radius = 0.0
+                    }
+                }
+            ]
+
 elmLogo : ( App, Cmd AppMsg )
 elmLogo =
     let
@@ -261,6 +303,7 @@ elmLogo =
         Object.create
             [ id "elm-logo"
             , label "Elm Logo"
+            , canFloat False
             , position <| vec3 38 30 -112
             , overlay <| html
 
