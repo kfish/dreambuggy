@@ -56,6 +56,8 @@ main =
 
                 , addApps ( List.repeat 100 (addSomewhere (on Beach) hovercraft) )
 
+                , addApps ( List.repeat 100 (addSomewhere (on ShallowWater) boat) )
+
                 -- , addApps ( List.repeat 100 (addRandom (random buggy)) )
                 , addApps ( List.repeat 100 (addSomewhere aboveSeaLevel deltaWedge) )
 
@@ -287,6 +289,43 @@ hovercraft pos =
                     ]
             , vehicle <|
                 { drive = DreamBuggy.hovercraft
+                , vehicle =
+                    { speed = 10.0
+                    , height = 0.6
+                    , radius = 0.0
+                    }
+                }
+            ]
+
+boat : Vec3 -> ( App, Cmd AppMsg )
+boat pos =
+    let
+        html =
+            Html.div []
+                [ Html.h2 []
+                    [ Html.text "Boat" ]
+                , Html.br [] []
+                , Html.hr [] []
+                , DreamBuggy.overlay
+                ]
+    in
+        Object.create
+            [ id "boat"
+            , label "Boat"
+            , canFloat True
+            , position pos
+            , overlay <| html
+            , object <|
+                Object.texturedObjWith
+                    "meshes/boat1.obj"
+                    "textures/elmLogoDiffuse.png"
+                    "textures/elmLogoNorm.png"
+                    [ offset <| FloorCenter
+                    , scale <| Width 1.8
+                    , forward <| V3.i
+                    ]
+            , vehicle <|
+                { drive = DreamBuggy.boat
                 , vehicle =
                     { speed = 10.0
                     , height = 0.6
