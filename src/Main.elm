@@ -59,6 +59,8 @@ main =
                 -- , addApps ( List.repeat 100 (addRandom (random buggy)) )
                 , addApps ( List.repeat 100 (addSomewhere aboveSeaLevel deltaWedge) )
 
+                , addApps ( List.repeat 100 (addAnywhere fireCubePortal) )
+
                 {-
                    , Object.create
                        [ id "clouds-sphere"
@@ -75,13 +77,7 @@ main =
                        , object   <| Appearance fogMountainsDiamond (vec3 2 2 2)
                        ]
                 -}
-                , Object.create
-                    [ id "fire-cube"
-                    , label "Fire Cube"
-                    , position <| vec3 21 0 -25
-                    , object <| Appearance fireCube (vec3 1 1 1)
-                    , portal <| Remote "world2" (Facing "fire-cube")
-                    ]
+
                 , Object.create
                     [ id "sky-diamond"
                     , label "Sky Diamond"
@@ -211,6 +207,17 @@ textureCube pos =
                     }
                 }
             ]
+
+
+fireCubePortal : Vec3 -> ( App, Cmd AppMsg )
+fireCubePortal pos =
+    Object.create
+        [ id "fire-cube"
+        , label "Fire Cube"
+        , position pos
+        , object <| Appearance fireCube (vec3 1 1 1)
+        , portal <| Remote "world2" (Facing "fire-cube")
+        ]
 
 
 buggy : Vec3 -> ( App, Cmd AppMsg )
