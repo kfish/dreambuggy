@@ -291,7 +291,7 @@ hovercraft pos =
                 { drive = DreamBuggy.hovercraft
                 , vehicle =
                     { speed = 10.0
-                    , height = 0.6
+                    , height = 1.0
                     , radius = 0.0
                     }
                 }
@@ -328,7 +328,7 @@ boat pos =
                 { drive = DreamBuggy.boat
                 , vehicle =
                     { speed = 10.0
-                    , height = 0.6
+                    , height = 0.2
                     , radius = 0.0
                     }
                 }
