@@ -34,6 +34,7 @@ main : Navigator Demo.Flags Demo.Model Demo.Msg
 main =
     Demo.create
         [ { id = "world1"
+{-
           , label = "Dreambuggy"
           , backgroundColor = rgb 135 206 235
           , apps =
@@ -44,15 +45,17 @@ main =
 
                 -- , Balls.create 30
 
+{-
                 , addApps
                     [ deltaWedge <| vec3 23 0 12
                     , deltaWedge <| vec3 33 0 12
                     , buggy <| vec3 27 0 43
                     , buggy <| vec3 37 0 43
                     ]
+-}
 
                 -- , addApps ( List.repeat 1000 (addRandom (random textureCube)) )
-                , addApps ( List.repeat 100 (addSomewhere (on ShallowWater) textureCube) )
+                -- , addApps ( List.repeat 100 (addSomewhere (on ShallowWater) textureCube) )
 
                 , addApps ( List.repeat 100 (addSomewhere (on Beach) hovercraft) )
 
@@ -108,6 +111,7 @@ main =
           , defaultSelf = avatar 8.0
           }
         , { id = "world2"
+-}
           , label = "Shufflepuck Club"
           , backgroundColor = rgb 255 255 255
           , apps =
