@@ -16,5 +16,9 @@
         "here4/here4": "3.9.0 <= v < 4.0.0",
         "kfish/shufflepuck": "1.2.0 <= v < 2.0.0"
     },
+    "dependency-sources": {
+        "here4/here4": "../here4",
+        "kfish/shufflepuck": "../shufflepuck"
+    },
     "elm-version": "0.18.0 <= v < 0.19.0"
 }
