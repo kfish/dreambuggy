@@ -20,6 +20,7 @@ import Boids
 import BoxRoom
 import Balls
 import Demo
+import Road
 import Shufflepuck
 import Sky
 import StaticGround
@@ -118,6 +119,7 @@ main =
                 [ BoxRoom.create
                       [ BoxRoom.dimensions <| vec3 20 10 30
                       ]
+{-
                 , let
                     s =
                         Shufflepuck.default
@@ -127,6 +129,16 @@ main =
                             | id = "shufflepuck"
                             , position = vec3 0 0 0
                         }
+-}
+                , let
+                      spiralUp n =
+                          -- vec3 (3.0 * sin (n/10.0)) (n/5.0) (3.0 * cos (n/10.0))
+                          vec3 (3.0 * sin (n/10.0)) 0 (3.0 * cos (n/10.0))
+                      path =
+                          List.map spiralUp (List.map toFloat (List.range 1 30))
+                  in
+                      Road.create 1.0 path (vec3 0 1.0 0)
+
                 , Object.create
                     [ id "fire-cube"
                     , label "Fire Cube"
