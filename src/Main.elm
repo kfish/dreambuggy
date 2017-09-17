@@ -133,9 +133,9 @@ main =
                 , let
                       spiralUp n =
                           -- vec3 (3.0 * sin (n/10.0)) (n/5.0) (3.0 * cos (n/10.0))
-                          vec3 (3.0 * sin (n/10.0)) 0 (3.0 * cos (n/10.0))
+                          vec3 (3.0 * sin (n/10.0)) (n/30.0) (3.0 * cos (n/10.0))
                       path =
-                          List.map spiralUp (List.map toFloat (List.range 1 30))
+                          List.map spiralUp (List.map toFloat (List.range 1 300))
                   in
                       Road.create 1.0 path (vec3 0 1.0 0)
 
