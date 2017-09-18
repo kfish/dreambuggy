@@ -35,35 +35,38 @@ main : Navigator Demo.Flags Demo.Model Demo.Msg
 main =
     Demo.create
         [ { id = "world1"
-{-
           , label = "Dreambuggy"
           , backgroundColor = rgb 135 206 235
           , apps =
                 [ StaticGround.create Terrain.generate
                 , WaterWalls.create defaultPlacement
                 , Sky.create skySphere
+
+                -- , spiralRoad (1/5.0) 50.0 300 10.0 (vec3 0 0 0)
+                , addApps ( List.repeat 30 (addSomewhere aboveSeaLevel (spiralRoad (1/5.0) 50.0 300 10.0)) )
+
                 , elmLogo
 
                 -- , Balls.create 30
 
-{-
                 , addApps
                     [ deltaWedge <| vec3 23 0 12
                     , deltaWedge <| vec3 33 0 12
                     , buggy <| vec3 27 0 43
                     , buggy <| vec3 37 0 43
                     ]
--}
 
                 -- , addApps ( List.repeat 1000 (addRandom (random textureCube)) )
                 -- , addApps ( List.repeat 100 (addSomewhere (on ShallowWater) textureCube) )
 
+{-
                 , addApps ( List.repeat 100 (addSomewhere (on Beach) hovercraft) )
 
                 , addApps ( List.repeat 100 (addSomewhere (on ShallowWater) boat) )
 
                 -- , addApps ( List.repeat 100 (addRandom (random buggy)) )
                 , addApps ( List.repeat 100 (addSomewhere aboveSeaLevel deltaWedge) )
+-}
 
                 , addApps ( List.repeat 100 (addAnywhere fireCubePortal) )
 
@@ -112,7 +115,6 @@ main =
           , defaultSelf = avatar 8.0
           }
         , { id = "world2"
--}
           , label = "Shufflepuck Club"
           , backgroundColor = rgb 255 255 255
           , apps =
@@ -130,14 +132,18 @@ main =
                             , position = vec3 0 0 0
                         }
 -}
+{-
                 , let
+                      radius = 5.0
                       spiralUp n =
                           -- vec3 (3.0 * sin (n/10.0)) (n/5.0) (3.0 * cos (n/10.0))
-                          vec3 (3.0 * sin (n/10.0)) (n/30.0) (3.0 * cos (n/10.0))
+                          vec3 (radius * sin (n/10.0)) (n/30.0) (radius * cos (n/10.0))
                       path =
                           List.map spiralUp (List.map toFloat (List.range 1 300))
                   in
-                      Road.create 1.0 path (vec3 0 1.0 0)
+                      Road.create 4.0 path (vec3 0 0.0 0)
+-}
+                , spiralRoad (1/30.0) 5.0 300 4.0 (vec3 0 0 0)
 
                 , Object.create
                     [ id "fire-cube"
@@ -156,6 +162,16 @@ main =
           -}
           }
         ]
+
+spiralRoad : Float -> Float -> Int -> Float -> Vec3 -> ( App, Cmd AppMsg )
+spiralRoad rise radius length width pos =
+    let
+        spiralUp n =
+            vec3 (radius * sin (n/10.0)) (n * rise) (radius * cos (n/10.0))
+        path =
+            List.map spiralUp (List.map toFloat (List.range 0 length))
+    in
+        Road.create width path pos
 
 
 deltaWedge : Vec3 -> ( App, Cmd AppMsg )
