@@ -42,8 +42,10 @@ main =
                 , WaterWalls.create defaultPlacement
                 , Sky.create skySphere
 
-                -- , spiralRoad (1/5.0) 50.0 300 10.0 (vec3 0 0 0)
-                , addApps ( List.repeat 30 (addSomewhere aboveSeaLevel (spiralRoad (1/5.0) 50.0 300 10.0)) )
+                , ramp (1/40.0) 300 30 (vec3 10 0 -50)
+
+                , spiralRoad (1/2.0) 80.0 300 30.0 (vec3 0 0 80)
+                -- , addApps ( List.repeat 30 (addSomewhere aboveSeaLevel (spiralRoad (1/5.0) 50.0 300 10.0)) )
 
                 , elmLogo
 
@@ -143,7 +145,8 @@ main =
                   in
                       Road.create 4.0 path (vec3 0 0.0 0)
 -}
-                , spiralRoad (1/30.0) 5.0 300 4.0 (vec3 0 0 0)
+                -- , spiralRoad (1/30.0) 5.0 300 4.0 (vec3 0 0 0)
+                , ramp (1/30.0) 300 4.0 (vec3 0 1.0 0)
 
                 , Object.create
                     [ id "fire-cube"
@@ -170,6 +173,18 @@ spiralRoad rise radius length width pos =
             vec3 (radius * sin (n/10.0)) (n * rise) (radius * cos (n/10.0))
         path =
             List.map spiralUp (List.map toFloat (List.range 0 length))
+    in
+        Road.create width path pos
+
+
+ramp : Float -> Int -> Float -> Vec3 -> ( App, Cmd AppMsg )
+ramp  rise length width pos =
+    let
+        rampUp n =
+            vec3 0 (n * rise) (n/10.0)
+
+        path =
+            List.map rampUp (List.map toFloat (List.range 0 length))
     in
         Road.create width path pos
 
