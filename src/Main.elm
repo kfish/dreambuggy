@@ -35,6 +35,7 @@ main : Navigator Demo.Flags Demo.Model Demo.Msg
 main =
     Demo.create
         [ { id = "world1"
+{-
           , label = "Dreambuggy"
           , backgroundColor = rgb 135 206 235
           , apps =
@@ -44,7 +45,8 @@ main =
 
                 , ramp (1/40.0) 300 30 (vec3 10 0 -50)
 
-                , spiralRoad (1/2.0) 80.0 300 30.0 (vec3 0 0 80)
+                -- , spiralRoad (1/2.0) 80.0 300 30.0 (vec3 0 0 80)
+                , spiralRoad (1/30.0) 5.0 300 4.0 (vec3 30 0 20)
                 -- , addApps ( List.repeat 30 (addSomewhere aboveSeaLevel (spiralRoad (1/5.0) 50.0 300 10.0)) )
 
                 , elmLogo
@@ -117,11 +119,13 @@ main =
           , defaultSelf = avatar 8.0
           }
         , { id = "world2"
+-}
           , label = "Shufflepuck Club"
           , backgroundColor = rgb 255 255 255
           , apps =
                 [ BoxRoom.create
-                      [ BoxRoom.dimensions <| vec3 20 10 30
+                      [ BoxRoom.dimensions <| vec3 200 30 300
+                      , BoxRoom.floor 10.0
                       ]
 {-
                 , let
@@ -146,7 +150,23 @@ main =
                       Road.create 4.0 path (vec3 0 0.0 0)
 -}
                 -- , spiralRoad (1/30.0) 5.0 300 4.0 (vec3 0 0 0)
-                , ramp (1/30.0) 300 4.0 (vec3 0 1.0 0)
+                -- , ramp (1/30.0) 300 4.0 (vec3 -60 1.0 -50)
+
+                --, Road.create 20 [ vec3 0 0 0, vec3 0 5 10 ] (vec3 0 0 0)
+
+                , makeRoad 5 (vec3 -50 0 0)
+                    [ straight 10 (vec3 0 0 30)
+                    , curve 16 0 20 90
+                    -- , straight 10 (vec3 20 0 0)
+                    -- , curve 16 0 20 90
+                    -- , straight 10 (vec3 0 0 -70)
+                    -- , curve 16 0 20 90
+                    -- , straight 10 (vec3 -20 0 0)
+                    -- , curve 16 0 20 90
+                    -- , straightTo 10 (vec3 0 0 0)
+                    ]
+
+                , addApps ( List.repeat 100 (addAnywhere textureCube) )
 
                 , Object.create
                     [ id "fire-cube"
@@ -156,7 +176,7 @@ main =
                     , portal <| Remote "world1" (Facing "fire-cube")
                     ]
                 ]
-          , defaultSelf = avatar 5.7
+          , defaultSelf = avatar 30 -- 5.7
 
           {-
              , defaultSelf =
@@ -165,6 +185,93 @@ main =
           -}
           }
         ]
+
+
+curve : Float -> Float -> Float -> Float -> Vec3 -> (Vec3, List Vec3)
+curve nSegmentsPer360 rise radius degrees =
+    let
+        nSegments =
+            nSegmentsPer360 * degrees / 360.0
+
+        arc n =
+            let
+                radians =
+                    2 * pi * n / nSegmentsPer360
+                y =
+                    rise * n / nSegments
+            in
+                vec3 (radius * sin radians) y (radius * cos radians)
+    in
+        generatePath nSegments arc
+
+
+straight : Float -> Vec3 -> Vec3 -> (Vec3, List Vec3)
+straight segmentLength relativePath  =
+    let
+        length =
+            V3.length relativePath
+
+        nSegments =
+            length / segmentLength
+
+        unitPath =
+            V3.normalize relativePath
+
+        ramp n =
+            V3.scale (n * segmentLength) unitPath
+    in
+        generatePath nSegments ramp
+
+
+straightTo : Float -> Vec3 -> Vec3 -> (Vec3, List Vec3)
+straightTo segmentLength end start =
+    straight segmentLength (V3.sub end start) start
+
+
+generatePath : Float -> (Float -> Vec3) -> Vec3 -> ( Vec3, List Vec3 )
+generatePath nSegments f0 start =
+    let
+        nFullSegments =
+            floor nSegments
+
+        f v =
+             V3.add start (f0 v)
+
+        path =
+            List.map f (List.map toFloat (List.range 0 (nFullSegments-1)))
+
+        end =
+            f nSegments
+    in
+        if nSegments - toFloat nFullSegments < 1e3 then
+            (end, path)
+        else
+            (end, path++[end])
+ 
+
+foldPath : List (Vec3 -> (Vec3, List Vec3)) -> Vec3 -> (Vec3, List Vec3)
+foldPath paths start =
+    let
+        -- proc : Func -> (Vec3, List Vec3) -> (Vec3, List Vec3)
+        proc f (end0, path0) =
+            let
+                (end, path) =
+                    f end0
+            in
+                (end, path0 ++ path)
+    in
+        List.foldl proc (start, []) paths
+
+
+makeRoad : Float -> Vec3 -> List (Vec3 -> (Vec3, List Vec3)) -> ( App, Cmd AppMsg )
+makeRoad width pos paths =
+    let
+        path =
+            foldPath paths (vec3 0 0 0)
+            |> Tuple.second
+    in
+        Road.create width path pos
+
 
 spiralRoad : Float -> Float -> Int -> Float -> Vec3 -> ( App, Cmd AppMsg )
 spiralRoad rise radius length width pos =
@@ -248,9 +355,9 @@ textureCube pos =
                     , texturePath = "resources/woodCrate.jpg"
                     }
             , vehicle <|
-                { drive = DreamBuggy.boat
+                { drive = DreamBuggy.drive
                 , vehicle =
-                    { speed = 8.0
+                    { speed = 30 -- 8.0
                     , height = 1.0
                     , radius = 0.0
                     }
