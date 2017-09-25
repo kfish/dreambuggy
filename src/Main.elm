@@ -6,7 +6,6 @@ import Here4.Location exposing (..)
 import Here4.Navigator exposing (..)
 import Here4.Object as Object
 import Here4.Object.Attributes exposing (..)
-import Here4.Orientation
 import Here4.Placement exposing (defaultPlacement)
 import Here4.Primitive.Cube exposing (skyCube, fireCube, fogMountainsCube, voronoiCube, cubeMesh)
 import Here4.Primitive.Diamond exposing (cloudsDiamond, fogMountainsDiamond)
@@ -120,7 +119,8 @@ main =
           }
         , { id = "world2"
 -}
-          , label = "Shufflepuck Club"
+          -- , label = "Shufflepuck Club"
+          , label = "Mondrian Testing Facility"
           , backgroundColor = rgb 255 255 255
           , apps =
                 [ BoxRoom.create
@@ -153,20 +153,31 @@ main =
                 -- , ramp (1/30.0) 300 4.0 (vec3 -60 1.0 -50)
 
                 --, Road.create 20 [ vec3 0 0 0, vec3 0 5 10 ] (vec3 0 0 0)
+                --
 
-                , makeRoad 5 (vec3 -50 0 0)
-                    [ straight 10 (vec3 0 0 30)
+                , makeRoad 15 (vec3 -50 0 0)
+                    [ straight 10 (vec3 0 0 10)
+                    , straight 10 (vec3 0 5 30)
                     , curve 16 0 20 90
-                    -- , straight 10 (vec3 20 0 0)
-                    -- , curve 16 0 20 90
-                    -- , straight 10 (vec3 0 0 -70)
-                    -- , curve 16 0 20 90
-                    -- , straight 10 (vec3 -20 0 0)
-                    -- , curve 16 0 20 90
-                    -- , straightTo 10 (vec3 0 0 0)
+                    , straight 10 (vec3 20 0 0)
+                    , curve 16 0 20 90
+                    , straight 10 (vec3 0 -5 -10)
+                    , straight 10 (vec3 0 0 -20)
+                    , straight 10 (vec3 0 5 -10)
+                    , straight 10 (vec3 0 0 -10)
+                    , straight 10 (vec3 0 -5 -10)
+                    , straight 10 (vec3 0 0 -30)
+                    , straight 10 (vec3 0 5 -5)
+                    , straight 10 (vec3 0 0 -10)
+                    , straight 10 (vec3 0 -5 -5)
+                    , straight 10 (vec3 0 0 -10)
+                    , curve 16 0 20 90
+                    , straight 10 (vec3 -20 0 0)
+                    , curve 16 0 20 90
+                    , straightTo 10 (vec3 0 0 0)
                     ]
 
-                , addApps ( List.repeat 100 (addAnywhere textureCube) )
+                , addApps ( List.repeat 30 (addAnywhere textureCube) )
 
                 , Object.create
                     [ id "fire-cube"
@@ -187,25 +198,64 @@ main =
         ]
 
 
-curve : Float -> Float -> Float -> Float -> Vec3 -> (Vec3, List Vec3)
+type alias RoadPoint =
+    { position : Vec3
+    , forward : Vec3
+    }
+
+
+toRoadPoint v =
+    { position = v
+    , forward = V3.k
+    }
+
+
+curve : Float -> Float -> Float -> Float
+    -> RoadPoint -> (RoadPoint, List RoadPoint)
 curve nSegmentsPer360 rise radius degrees =
     let
         nSegments =
-            nSegmentsPer360 * degrees / 360.0
+            nSegmentsPer360 * abs degrees / 360.0
 
-        arc n =
+        sign =
+            if degrees < 0 then
+                -1
+            else
+                1
+
+        arc start n =
             let
+                right =
+                    V3.cross start.forward V3.j
+                    |> V3.normalize
+
+                center =
+                    V3.scale (sign * radius) right
+                    |> V3.sub start.position
+
+                startRadians =
+                    atan2 (V3.getX right) (V3.getZ right)
+
                 radians =
-                    2 * pi * n / nSegmentsPer360
+                    startRadians + (sign * 2 * pi * n / nSegmentsPer360)
+
+                unitRise =
+                    rise / nSegments
+
                 y =
-                    rise * n / nSegments
+                    n * unitRise
             in
-                vec3 (radius * sin radians) y (radius * cos radians)
+                { position =
+                    vec3 (radius * sin radians) y (radius * cos radians)
+                    |> V3.add center
+                , forward =
+                    vec3 (cos radians) unitRise (sin radians) -- close enough
+                }
     in
         generatePath nSegments arc
 
 
-straight : Float -> Vec3 -> Vec3 -> (Vec3, List Vec3)
+straight : Float -> Vec3 -> RoadPoint -> (RoadPoint, List RoadPoint)
 straight segmentLength relativePath  =
     let
         length =
@@ -217,31 +267,32 @@ straight segmentLength relativePath  =
         unitPath =
             V3.normalize relativePath
 
-        ramp n =
-            V3.scale (n * segmentLength) unitPath
+        ramp start n =
+            { position =
+                V3.scale (n * segmentLength) unitPath
+                |> V3.add start.position
+            , forward = unitPath
+            }
     in
         generatePath nSegments ramp
 
 
-straightTo : Float -> Vec3 -> Vec3 -> (Vec3, List Vec3)
+straightTo : Float -> Vec3 -> RoadPoint -> (RoadPoint, List RoadPoint)
 straightTo segmentLength end start =
-    straight segmentLength (V3.sub end start) start
+    straight segmentLength (V3.sub end start.position) start
 
 
-generatePath : Float -> (Float -> Vec3) -> Vec3 -> ( Vec3, List Vec3 )
-generatePath nSegments f0 start =
+generatePath : Float -> (RoadPoint -> Float -> RoadPoint) -> RoadPoint -> ( RoadPoint, List RoadPoint )
+generatePath nSegments f start =
     let
         nFullSegments =
             floor nSegments
 
-        f v =
-             V3.add start (f0 v)
-
         path =
-            List.map f (List.map toFloat (List.range 0 (nFullSegments-1)))
+            List.map (f start) (List.map toFloat (List.range 1 nFullSegments))
 
         end =
-            f nSegments
+            f start nSegments
     in
         if nSegments - toFloat nFullSegments < 1e3 then
             (end, path)
@@ -249,10 +300,10 @@ generatePath nSegments f0 start =
             (end, path++[end])
  
 
-foldPath : List (Vec3 -> (Vec3, List Vec3)) -> Vec3 -> (Vec3, List Vec3)
+foldPath : List (RoadPoint -> (RoadPoint, List RoadPoint)) -> RoadPoint -> (RoadPoint, List RoadPoint)
 foldPath paths start =
     let
-        -- proc : Func -> (Vec3, List Vec3) -> (Vec3, List Vec3)
+        -- proc : Func -> (RoadPoint, List Vec3) -> (RoadPoint, List Vec3)
         proc f (end0, path0) =
             let
                 (end, path) =
@@ -263,14 +314,18 @@ foldPath paths start =
         List.foldl proc (start, []) paths
 
 
-makeRoad : Float -> Vec3 -> List (Vec3 -> (Vec3, List Vec3)) -> ( App, Cmd AppMsg )
+makeRoad : Float -> Vec3 -> List (RoadPoint -> (RoadPoint, List RoadPoint)) -> ( App, Cmd AppMsg )
 makeRoad width pos paths =
     let
+        start =
+            vec3 0 0 0
+
         path =
-            foldPath paths (vec3 0 0 0)
+            foldPath paths (toRoadPoint start)
             |> Tuple.second
+            |> List.map .position
     in
-        Road.create width path pos
+        Road.create width (start :: path) pos
 
 
 spiralRoad : Float -> Float -> Int -> Float -> Vec3 -> ( App, Cmd AppMsg )
@@ -357,7 +412,7 @@ textureCube pos =
             , vehicle <|
                 { drive = DreamBuggy.drive
                 , vehicle =
-                    { speed = 30 -- 8.0
+                    { speed = 40 -- 8.0
                     , height = 1.0
                     , radius = 0.0
                     }
