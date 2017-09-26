@@ -157,11 +157,11 @@ main =
 
                 , makeRoad 15 (vec3 -50 0 0)
                     [ straight 10 (vec3 0 0 10)
-                    , straight 10 (vec3 0 5 30)
+                    , straightTwist 24.3 10 (vec3 0 5 30)
                     , curve 16 0 20 90
                     , straight 10 (vec3 20 0 0)
                     , curve 16 0 20 90
-                    , straight 10 (vec3 0 -5 -10)
+                    , straightTwist -24.3 10 (vec3 0 -5 -10)
                     , straight 10 (vec3 0 0 -20)
                     , straight 10 (vec3 0 5 -10)
                     , straight 10 (vec3 0 0 -10)
@@ -200,12 +200,14 @@ main =
 
 type alias RoadPoint =
     { position : Vec3
+    , banking : Float
     , forward : Vec3
     }
 
 
 toRoadPoint v =
     { position = v
+    , banking = 0
     , forward = V3.k
     }
 
@@ -248,6 +250,8 @@ curve nSegmentsPer360 rise radius degrees =
                 { position =
                     vec3 (radius * sin radians) y (radius * cos radians)
                     |> V3.add center
+                , banking =
+                    start.banking
                 , forward =
                     vec3 (cos radians) unitRise (sin radians) -- close enough
                 }
@@ -255,8 +259,8 @@ curve nSegmentsPer360 rise radius degrees =
         generatePath nSegments arc
 
 
-straight : Float -> Vec3 -> RoadPoint -> (RoadPoint, List RoadPoint)
-straight segmentLength relativePath  =
+straightTwist : Float -> Float -> Vec3 -> RoadPoint -> (RoadPoint, List RoadPoint)
+straightTwist relativeBanking segmentLength relativePath =
     let
         length =
             V3.length relativePath
@@ -271,10 +275,16 @@ straight segmentLength relativePath  =
             { position =
                 V3.scale (n * segmentLength) unitPath
                 |> V3.add start.position
+            , banking =
+                start.banking + relativeBanking * n / nSegments
             , forward = unitPath
             }
     in
         generatePath nSegments ramp
+
+
+straight : Float -> Vec3 -> RoadPoint -> (RoadPoint, List RoadPoint)
+straight = straightTwist 0
 
 
 straightTo : Float -> Vec3 -> RoadPoint -> (RoadPoint, List RoadPoint)
@@ -320,12 +330,17 @@ makeRoad width pos paths =
         start =
             vec3 0 0 0
 
+        dropForward p =
+            { position = p.position
+            , banking = p.banking
+            }
+
         path =
             foldPath paths (toRoadPoint start)
             |> Tuple.second
-            |> List.map .position
+            |> List.map dropForward
     in
-        Road.create width (start :: path) pos
+        Road.racetrack width (Road.toBankingPoint start :: path) pos
 
 
 spiralRoad : Float -> Float -> Int -> Float -> Vec3 -> ( App, Cmd AppMsg )
