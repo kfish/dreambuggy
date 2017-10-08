@@ -125,7 +125,7 @@ main =
           , apps =
                 [ BoxRoom.create
                       [ BoxRoom.dimensions <| vec3 200 30 300
-                      , BoxRoom.floor 10.0
+                      -- , BoxRoom.floor 10.0
                       ]
 {-
                 , let
@@ -149,7 +149,7 @@ main =
                   in
                       Road.create 4.0 path (vec3 0 0.0 0)
 -}
-                -- , spiralRoad (1/30.0) 5.0 300 4.0 (vec3 0 0 0)
+                -- , spiralRoad (1/10.0) 15 100 15 (vec3 30 0 80)
                 -- , ramp (1/30.0) 300 4.0 (vec3 -60 1.0 -50)
 
                 --, Road.create 20 [ vec3 0 0 0, vec3 0 5 10 ] (vec3 0 0 0)
@@ -157,11 +157,11 @@ main =
 
                 , makeRoad 15 (vec3 -50 0 0)
                     [ straight 10 (vec3 0 0 10)
-                    , straightTwist 24.3 10 (vec3 0 5 30)
+                    , bank 15 24.3 10 (vec3 0 0 50)
                     , curve 16 0 20 90
                     , straight 10 (vec3 20 0 0)
                     , curve 16 0 20 90
-                    , straightTwist -24.3 10 (vec3 0 -5 -10)
+                    , bank 15 -24.3 10 (vec3 0 0 -50)
                     , straight 10 (vec3 0 0 -20)
                     , straight 10 (vec3 0 5 -10)
                     , straight 10 (vec3 0 0 -10)
@@ -178,6 +178,8 @@ main =
                     ]
 
                 , addApps ( List.repeat 30 (addAnywhere textureCube) )
+
+                -- , buggy <| vec3 0 0 10
 
                 , Object.create
                     [ id "fire-cube"
@@ -281,6 +283,18 @@ straightTwist relativeBanking segmentLength relativePath =
             }
     in
         generatePath nSegments ramp
+
+
+bank : Float -> Float -> Float -> Vec3 -> RoadPoint -> (RoadPoint, List RoadPoint)
+bank width relativeBanking segmentLength relativePath =
+    let
+        rise =
+            sin (degrees relativeBanking) * width / 2.0
+
+        risePath =
+            V3.add relativePath (vec3 0 rise 0)
+    in
+        straightTwist relativeBanking segmentLength risePath
 
 
 straight : Float -> Vec3 -> RoadPoint -> (RoadPoint, List RoadPoint)
@@ -427,7 +441,7 @@ textureCube pos =
             , vehicle <|
                 { drive = DreamBuggy.drive
                 , vehicle =
-                    { speed = 40 -- 8.0
+                    { speed = 8.0
                     , height = 1.0
                     , radius = 0.0
                     }
