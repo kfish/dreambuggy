@@ -157,11 +157,11 @@ main =
 
                 , makeRoad 15 (vec3 -50 0 0)
                     [ straight 10 (vec3 0 0 10)
-                    , bank 15 24.3 10 (vec3 0 0 50)
+                    , bank 15 True 24.3 10 (vec3 0 0 50)
                     , curve 16 0 20 90
                     , straight 10 (vec3 20 0 0)
                     , curve 16 0 20 90
-                    , bank 15 -24.3 10 (vec3 0 0 -50)
+                    , bank 15 False -24.3 2 (vec3 0 0 -50)
                     , straight 10 (vec3 0 0 -20)
                     , straight 10 (vec3 0 5 -10)
                     , straight 10 (vec3 0 0 -10)
@@ -189,7 +189,7 @@ main =
                     , portal <| Remote "world1" (Facing "fire-cube")
                     ]
                 ]
-          , defaultSelf = avatar 30 -- 5.7
+          , defaultSelf = avatar 5.7
 
           {-
              , defaultSelf =
@@ -285,16 +285,22 @@ straightTwist relativeBanking segmentLength relativePath =
         generatePath nSegments ramp
 
 
-bank : Float -> Float -> Float -> Vec3 -> RoadPoint -> (RoadPoint, List RoadPoint)
-bank width relativeBanking segmentLength relativePath =
+bank : Float -> Bool -> Float -> Float -> Vec3 -> RoadPoint -> (RoadPoint, List RoadPoint)
+bank width up relativeBanking segmentLength relativePath start =
     let
+        riseDue b =
+            sin (degrees b) * width / 2.0
+
+        sign =
+            if up then 1.0 else -1.0
+
         rise =
-            sin (degrees relativeBanking) * width / 2.0
+            sign * (riseDue start.banking + riseDue (start.banking + relativeBanking))
 
         risePath =
             V3.add relativePath (vec3 0 rise 0)
     in
-        straightTwist relativeBanking segmentLength risePath
+        straightTwist relativeBanking segmentLength risePath start
 
 
 straight : Float -> Vec3 -> RoadPoint -> (RoadPoint, List RoadPoint)
@@ -318,10 +324,13 @@ generatePath nSegments f start =
         end =
             f start nSegments
     in
-        if nSegments - toFloat nFullSegments < 1e3 then
+{-
+        if nSegments - toFloat nFullSegments < 1e-2 then
             (end, path)
         else
             (end, path++[end])
+-}
+        (end, path)
  
 
 foldPath : List (RoadPoint -> (RoadPoint, List RoadPoint)) -> RoadPoint -> (RoadPoint, List RoadPoint)
